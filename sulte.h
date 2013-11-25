@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QTime>
 #include <QLCDNumber>
+#include "csswork.h"
 
 namespace Ui {
 class sulteForm;
@@ -19,10 +20,19 @@ public:
     int blinkTime;
     int blinkSteps;
     int blinkDt;
-    QPalette pal;
+    CSStyle* css;
+    CSSColor* baseColor;
+    CSSColor* currentColor;
+    QTimer* downtimer;
+
     TableCell(QWidget *parent = 0);
     void setSize(int width);
+    void setColor();
+
+
+public slots:
     void blink();
+    void animateColor();
 };
 
 class Sulte : public QMainWindow

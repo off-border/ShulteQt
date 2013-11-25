@@ -2,6 +2,7 @@
 #include "ui_sulte.h"
 #include <math.h>
 #include <QPalette>
+#include <QDebug>
 
 QString n2s(int n){
     return QString::number(n);
@@ -114,7 +115,9 @@ void Sulte::loadCells(){
             cells[i][j]->setSize( cellWidth );
             cells[i][j]->move(i*cellWidth, j*cellWidth);
             cells[i][j]->setText(n2s(cellVals[i*N+j]));
-            cells[i][j]->setStyleSheet(cells[i][j]->styleSheet()+"font-size: "+n2s(cellFont) + "px;");
+            //cells[i][j]->setStyleSheet(cells[i][j]->styleSheet()+"font-size: "+n2s(cellFont) + "px;");
+            cells[i][j]->css->fontSize->value = cellFont;
+            cells[i][j]->setStyleSheet(cells[i][j]->css->toString());
             cells[i][j]->value = cellVals[i*N+j];
             cells[i][j]->show();
             connect(cells[i][j],SIGNAL(clicked()),SLOT(cellClicked()));
@@ -153,14 +156,20 @@ void Sulte::cellClicked(){
 
 TableCell::TableCell(QWidget *parent):QPushButton(parent){
     setStyleSheet( "border-color:gray; margin: 3px; background-color:#f5f5f5; text-align:center;" );
-    this->setAutoFillBackground(true);
 
-    //pal = this->palette();
-    //QPalette pal1(palette());
-    //pal1->setColor( /*this->backgroundRole(), QColor(0,250,0) */);
-    //pal1.setColor(QPalette::ButtonText,Qt::green);
+    currentColor = new CSSColor(245,245,245);
+    baseColor = new CSSColor(245,245,245);
 
-    //this->setPalette( pal1 );
+    css = new CSStyle();
+    css->backgroundColor    ->value.fromCssColor(currentColor);
+    css->borderColor        ->value.fromInt(120,120,120);
+    css->margin             ->value = 3;
+    css->textAlign          ->value = "center";
+    css->color              ->value.fromInt(80,80,80);
+    setStyleSheet(css->toString());
+
+    downtimer = new QTimer();
+
 }
 
 void TableCell::setSize(int width){
@@ -168,7 +177,36 @@ void TableCell::setSize(int width){
 }
 
 void TableCell::blink(){
-    pal.setColor(QPalette::Base,Qt::green);
-    this->setPalette(pal);
+    currentColor->fromInt(170,255,170);
+    setColor();
+    downtimer->setInterval(20);
+    connect(downtimer, SIGNAL(timeout()),SLOT(animateColor()));
+    downtimer->start();
+
+}
+
+void TableCell::animateColor(){
+    qDebug()<< currentColor->toHtmlRGBa();
+    CSSColor* bc = baseColor;
+    CSSColor* cc = currentColor;
+    if (cc->r==bc->r&&cc->g==bc->g&&cc->b==bc->b&&cc->a==bc->a){
+        downtimer->stop();
+        return;
+    }
+    if (cc->r != bc->r)
+        cc->r += (bc->r - cc->r)/abs(bc->r - cc->r);
+    if (cc->g != bc->g)
+        cc->g += (bc->g - cc->g)/abs(bc->g - cc->g);
+    if (cc->b != bc->b)
+        cc->b += (bc->b - cc->b)/abs(bc->b - cc->b);
+    if (cc->a != bc->a)
+        cc->a += (bc->a - cc->a)/abs(bc->a - cc->a);
+    qDebug() << currentColor;
+    setColor();
+}
+
+void TableCell::setColor(){
+    css->backgroundColor->value.fromCssColor(currentColor);
+    setStyleSheet(css->toString());
 }
 

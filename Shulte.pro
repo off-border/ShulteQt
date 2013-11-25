@@ -13,7 +13,8 @@ TEMPLATE = app
 SOURCES += main.cpp\
         sulte.cpp
 
-HEADERS  += sulte.h
+HEADERS  += sulte.h \
+    csswork.h
 
 FORMS    += sulte.ui
 

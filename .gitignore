@@ -1,3 +1,5 @@
 *.o
 *.exe
 *.user
+*.Debug
+*.Release
