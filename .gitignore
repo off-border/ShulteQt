@@ -3,3 +3,4 @@
 *.user
 *.Debug
 *.Release
+release/moc_sulte.cpp
