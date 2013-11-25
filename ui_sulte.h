@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'sulte.ui'
 **
-** Created: Fri 22. Nov 16:47:32 2013
+** Created: Mon 25. Nov 12:46:20 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -52,7 +52,7 @@ public:
 "	color: gray;\n"
 "}\n"
 "QWidget{\n"
-"	background-color:#999999\n"
+"	background-color:#aaa;\n"
 "}"));
         ebaniyWidget = new QWidget(sulteForm);
         ebaniyWidget->setObjectName(QString::fromUtf8("ebaniyWidget"));
@@ -60,8 +60,7 @@ public:
         tableWidget = new QWidget(ebaniyWidget);
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
         tableWidget->setGeometry(QRect(50, 40, 321, 231));
-        tableWidget->setStyleSheet(QString::fromUtf8("ackground-color: #f5f5f5;\n"
-"background-color:transparent;\n"
+        tableWidget->setStyleSheet(QString::fromUtf8("background-color:transparent;\n"
 "border-color:transparent; \n"
 ""));
         controls = new QFrame(ebaniyWidget);
@@ -107,8 +106,41 @@ public:
         lcdNumber = new QLCDNumber(controls);
         lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
         lcdNumber->setGeometry(QRect(30, 76, 111, 51));
-        lcdNumber->setStyleSheet(QString::fromUtf8("color: orange;\n"
-"font-weight: bold;\n"
+        QPalette palette1;
+        QBrush brush2(QColor(79, 79, 79, 255));
+        brush2.setStyle(Qt::SolidPattern);
+        palette1.setBrush(QPalette::Active, QPalette::WindowText, brush2);
+        QBrush brush3(QColor(170, 170, 170, 255));
+        brush3.setStyle(Qt::SolidPattern);
+        palette1.setBrush(QPalette::Active, QPalette::Button, brush3);
+        QBrush brush4(QColor(88, 88, 88, 255));
+        brush4.setStyle(Qt::SolidPattern);
+        palette1.setBrush(QPalette::Active, QPalette::Light, brush4);
+        palette1.setBrush(QPalette::Active, QPalette::Text, brush);
+        palette1.setBrush(QPalette::Active, QPalette::BrightText, brush4);
+        QBrush brush5(QColor(99, 99, 99, 255));
+        brush5.setStyle(Qt::SolidPattern);
+        palette1.setBrush(QPalette::Active, QPalette::ButtonText, brush5);
+        palette1.setBrush(QPalette::Active, QPalette::Base, brush3);
+        palette1.setBrush(QPalette::Active, QPalette::Window, brush3);
+        palette1.setBrush(QPalette::Inactive, QPalette::WindowText, brush2);
+        palette1.setBrush(QPalette::Inactive, QPalette::Button, brush3);
+        palette1.setBrush(QPalette::Inactive, QPalette::Light, brush4);
+        palette1.setBrush(QPalette::Inactive, QPalette::Text, brush);
+        palette1.setBrush(QPalette::Inactive, QPalette::BrightText, brush4);
+        palette1.setBrush(QPalette::Inactive, QPalette::ButtonText, brush5);
+        palette1.setBrush(QPalette::Inactive, QPalette::Base, brush3);
+        palette1.setBrush(QPalette::Inactive, QPalette::Window, brush3);
+        palette1.setBrush(QPalette::Disabled, QPalette::WindowText, brush);
+        palette1.setBrush(QPalette::Disabled, QPalette::Button, brush3);
+        palette1.setBrush(QPalette::Disabled, QPalette::Light, brush4);
+        palette1.setBrush(QPalette::Disabled, QPalette::Text, brush);
+        palette1.setBrush(QPalette::Disabled, QPalette::BrightText, brush4);
+        palette1.setBrush(QPalette::Disabled, QPalette::ButtonText, brush);
+        palette1.setBrush(QPalette::Disabled, QPalette::Base, brush3);
+        palette1.setBrush(QPalette::Disabled, QPalette::Window, brush3);
+        lcdNumber->setPalette(palette1);
+        lcdNumber->setStyleSheet(QString::fromUtf8("font-weight: bold;\n"
 "border-color:transparent;"));
         startButton = new QPushButton(controls);
         startButton->setObjectName(QString::fromUtf8("startButton"));
@@ -127,7 +159,9 @@ public:
         exitButton = new ExitLabel(ebaniyWidget);
         exitButton->setObjectName(QString::fromUtf8("exitButton"));
         exitButton->setGeometry(QRect(570, 10, 71, 41));
-        exitButton->setStyleSheet(QString::fromUtf8("border-color:gray;"));
+        exitButton->setStyleSheet(QString::fromUtf8("border-color:gray;\n"
+"\n"
+""));
         exitButton->setAlignment(Qt::AlignCenter);
         sulteForm->setCentralWidget(ebaniyWidget);
 

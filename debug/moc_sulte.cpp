@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'sulte.h'
 **
-** Created: Fri 22. Nov 17:37:46 2013
+** Created: Mon 25. Nov 11:37:37 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -84,7 +84,7 @@ static const uint qt_meta_data_Sulte[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -95,12 +95,14 @@ static const uint qt_meta_data_Sulte[] = {
        7,    6,    6,    6, 0x0a,
       15,    6,    6,    6, 0x0a,
       22,    6,    6,    6, 0x0a,
+      36,    6,    6,    6, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Sulte[] = {
     "Sulte\0\0start()\0stop()\0cellClicked()\0"
+    "updateTime()\0"
 };
 
 void Sulte::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -112,6 +114,7 @@ void Sulte::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 0: _t->start(); break;
         case 1: _t->stop(); break;
         case 2: _t->cellClicked(); break;
+        case 3: _t->updateTime(); break;
         default: ;
         }
     }
@@ -150,9 +153,9 @@ int Sulte::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

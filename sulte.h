@@ -16,8 +16,13 @@ class TableCell: public QPushButton{
     Q_OBJECT
 public:
     int value;
+    int blinkTime;
+    int blinkSteps;
+    int blinkDt;
+    QPalette pal;
     TableCell(QWidget *parent = 0);
     void setSize(int width);
+    void blink();
 };
 
 class Sulte : public QMainWindow
@@ -25,10 +30,15 @@ class Sulte : public QMainWindow
         Q_OBJECT
 
     public:
-        int N;
+        int     N;
         TableCell* cells[50][50];
-        int cellVals[50*50];
-        int nextVal;
+        int     cellVals[50*50];
+        int     nextVal;
+        QTimer* timer;
+        QTime   startTime;
+        int     totalMsec;
+        char    displayTime[30];
+        bool    success;
 
         explicit Sulte(QWidget *parent = 0);
         ~Sulte();
@@ -39,6 +49,7 @@ class Sulte : public QMainWindow
         void start();
         void stop();
         void cellClicked();
+        void updateTime();
 
     private:
         Ui::sulteForm *ui;
