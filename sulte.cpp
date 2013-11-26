@@ -190,7 +190,6 @@ void Sulte::cellClicked(){
 
 void Sulte::showAvg(){
     int avg = lastResults.getAvg(ui->spinBox->value());
-    qDebug() <<avg;
     int sec = avg / 1000;
     int dsec = avg % 1000 / 100;
     ui->avgTime->setText( "Avg. time: " + n2s(sec) + "." + n2s(dsec) );
