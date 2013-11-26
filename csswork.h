@@ -2,6 +2,7 @@
 #define CSSWORK_H
 #include <QString>
 #include <stdio.h>
+
 class CSSColor{
 public:
     int r;
@@ -27,7 +28,7 @@ public:
     }
 
     void fromHtml(QString code){
-        sscanf(code.toAscii(),"#%2d%2d%2d",&r,&g,&b);
+        sscanf(code.toAscii(),"#%2x%2x%2x",&r,&g,&b);
         a = 255;
     }
     void fromInt(int R,int G, int B){
@@ -61,43 +62,70 @@ public:
     }
 };
 
-class CSSColorProp{
+class _CSSValue{
+public:
+    QString attrName;
+    bool    empty;
+    _CSSValue(){
+        empty = false;
+    }
+    _CSSValue (bool _empty){
+        empty = _empty;
+    }
+    QString toString(){
+        //if (empty)
+            //return QString("");
+       //else
+            return _toString();
+    }
+    QString _toString(){
+        return "color:red;";
+    }
+};
+
+class CSSColorProp: public  _CSSValue{
 public:
     CSSColor value;
-    QString  attrName;
     CSSColorProp(QString _attrname, CSSColor _color){
-        value = _color;
+        empty    = false;
+        value    = _color;
         attrName = _attrname;
     }
     QString toString(){
+        if ( empty )
+            return QString("");
         return QString(attrName + ":" + value.toHtmlRGBa() + "; ");
     }
 };
 
-class CSSIntProp{
+class CSSIntProp: public _CSSValue{
 public:
     int value;
     QString measure;
-    QString attrName;
     CSSIntProp(QString _attrname, int _value, QString _measure){
+        empty    = false;
         attrName = _attrname;
-        value = _value;
-        measure = _measure;
+        value    = _value;
+        measure  = _measure;
     }
     QString toString(){
+        if ( empty )
+            return QString("");
         return QString(attrName + ":" + QString::number(value) + measure + "; ");
     }
 };
 
-class CSSStringProp{
+class CSSStringProp: public _CSSValue{
 public:
     QString value;
-    QString attrName;
     CSSStringProp(QString _attrname, QString _value){
+        empty    = false;
         attrName = _attrname;
-        value = _value;
+        value    = _value;
     }
     QString toString(){
+        if ( empty )
+            return QString("");
         return QString(attrName + ":" + value + "; ");
     }
 };
@@ -108,6 +136,7 @@ public:
     QString selector;
     CSSColorProp*  backgroundColor;
     CSSColorProp*  borderColor;
+    CSSIntProp*    borderWidth;
     CSSColorProp*  color;
     CSSIntProp*    margin;
     CSSStringProp* textAlign;
@@ -115,12 +144,13 @@ public:
   //конструктор
     CSStyle(){
         selector = "";
-        backgroundColor = new CSSColorProp ("background-color",CSSColor());
-        borderColor     = new CSSColorProp("border-color",CSSColor());
-        color           = new CSSColorProp("color",CSSColor());
-        margin          = new CSSIntProp("margin",0,"px");
-        textAlign       = new CSSStringProp("text-align","center");
-        fontSize        = new CSSIntProp("font-size",10,"px");
+        backgroundColor = new CSSColorProp  ("background-color",CSSColor());
+        borderColor     = new CSSColorProp  ("border-color",    CSSColor());
+        borderWidth     = new CSSIntProp    ("border-width",    0,"px");
+        color           = new CSSColorProp  ("color",           CSSColor());
+        margin          = new CSSIntProp    ("margin",          0,"px");
+        textAlign       = new CSSStringProp ("text-align",      "center");
+        fontSize        = new CSSIntProp    ("font-size",       10,"px");
     }
   //в строку
     QString toString(){

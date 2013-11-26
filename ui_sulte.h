@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'sulte.ui'
 **
-** Created: Tue 26. Nov 10:46:08 2013
+** Created: Tue 26. Nov 18:19:39 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -37,6 +37,7 @@ public:
     QLCDNumber *lcdNumber;
     QPushButton *startButton;
     QLabel *nextLabel;
+    QLabel *avgTime;
     QPlainTextEdit *plainTextEdit;
     ExitLabel *exitButton;
 
@@ -65,7 +66,7 @@ public:
 ""));
         controls = new QFrame(ebaniyWidget);
         controls->setObjectName(QString::fromUtf8("controls"));
-        controls->setGeometry(QRect(430, 50, 181, 251));
+        controls->setGeometry(QRect(430, 50, 181, 291));
         controls->setStyleSheet(QString::fromUtf8("border-color:gray;"));
         controls->setFrameShape(QFrame::StyledPanel);
         controls->setFrameShadow(QFrame::Raised);
@@ -135,7 +136,11 @@ public:
 "border-color:black;"));
         nextLabel = new QLabel(controls);
         nextLabel->setObjectName(QString::fromUtf8("nextLabel"));
-        nextLabel->setGeometry(QRect(20, 200, 141, 31));
+        nextLabel->setGeometry(QRect(20, 204, 141, 31));
+        avgTime = new QLabel(controls);
+        avgTime->setObjectName(QString::fromUtf8("avgTime"));
+        avgTime->setGeometry(QRect(23, 242, 140, 31));
+        avgTime->setStyleSheet(QString::fromUtf8("border:none; font-size: 20px;"));
         plainTextEdit = new QPlainTextEdit(ebaniyWidget);
         plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
         plainTextEdit->setGeometry(QRect(50, 300, 321, 71));
@@ -173,6 +178,7 @@ public:
         spinBox->setSuffix(QString());
         startButton->setText(QApplication::translate("sulteForm", "Start", 0, QApplication::UnicodeUTF8));
         nextLabel->setText(QApplication::translate("sulteForm", "Next: ", 0, QApplication::UnicodeUTF8));
+        avgTime->setText(QApplication::translate("sulteForm", "Avg. time: ", 0, QApplication::UnicodeUTF8));
         exitButton->setText(QApplication::translate("sulteForm", "Exit", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

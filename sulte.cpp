@@ -1,7 +1,7 @@
 #include "sulte.h"
 #include "ui_sulte.h"
 #include <math.h>
-#include <QDebug>
+
 
 QString n2s(int n){
     return QString::number(n);
@@ -17,15 +17,32 @@ Sulte::Sulte(QWidget *parent) :
     this->setWindowFlags(Qt::FramelessWindowHint);
     connect(ui->exitButton,SIGNAL(clicked()),SLOT(exit()));
     connect(ui->startButton,SIGNAL(clicked()),SLOT(start()));
+    connect(ui->spinBox, SIGNAL( valueChanged(int) ), SLOT( showAvg_(int)) );
     timer = new QTimer();
 
     for (int i= 0; i<50; i++)
-        for (int j= 0; j< 50; j++)
+        for (int j= 0; j< 50; j++){
             cells[i][j] = new TableCell(ui->tableWidget);
+            connect(cells[i][j],SIGNAL(clicked()),SLOT(cellClicked()));
+        }
 
     settings = new QSettings("OutOfOrder inc.", "Shulte");
-    if ( settings->value("/tableSize").toInt() != 0 )
+    if ( settings->value("tableSize").toInt() != 0 )
         ui->spinBox->setValue(settings->value("/tableSize").toInt());
+    QList<int> lr;
+    if ( settings->value("lastResults").toByteArray().size() != 0 ){
+        lastResults.fromByteArray( settings->value("lastResults").toByteArray() );
+    }
+    showAvg();
+
+    startBtStyle = new CSStyle();
+    startBtStyle->backgroundColor->value.fromHtml("#55dd55");
+    startBtStyle->color->value.fromInt(255,255,255);
+    startBtStyle->borderWidth->value = 1;
+    startBtStyle->borderColor->value.fromInt(0,0,0);
+    startBtStyle->fontSize->value = 20;
+    ui->startButton->setStyleSheet( startBtStyle->toString() );
+
 }
 Sulte::~Sulte()
 {
@@ -33,6 +50,7 @@ Sulte::~Sulte()
 }
 void Sulte:: exit(){
     settings->setValue("tableSize",ui->spinBox->value());
+    settings->setValue("lastResults", lastResults.toByteArray());
     close();
 }
 
@@ -71,21 +89,28 @@ void Sulte::start(){
     disconnect( ui->startButton, SIGNAL(clicked()), this, SLOT( start() ));
     connect   ( ui->startButton, SIGNAL(clicked()), this, SLOT( stop()  ) );
     ui->startButton->setText("STOP");
+    startBtStyle->color->value.fromInt(255,255,0);
+    ui->startButton->setStyleSheet( startBtStyle->toString() );
 }
 
 void Sulte::stop(){
+    qDebug() << "Stopped";
     timer->stop();
     sprintf(displayTime,"%d.%d",totalMsec/1000,totalMsec%1000%100/10);
     ui->lcdNumber->display(displayTime);
     disconnect( ui->startButton, SIGNAL(clicked()), this, SLOT( stop()  ) );
     connect   ( ui->startButton, SIGNAL(clicked()), this, SLOT( start() ) );
     ui->startButton->setText("Start");
+    startBtStyle->color->value.fromInt(255,255,255);
+    ui->startButton->setStyleSheet( startBtStyle->toString() );
     if ( ! success )
         return;
     for (int i= 0; i< N; i++)
         for(int j= 0; j< N; j++){
             cells[i][j]->setText(":)");
         }
+    lastResults.push(ui->spinBox->value(), totalMsec );
+    showAvg();
 }
 
 void Sulte::updateTime(){
@@ -130,7 +155,6 @@ void Sulte::loadCells(){
             cells[i][j]->setStyleSheet(cells[i][j]->css->toString());
             cells[i][j]->value = cellVals[i*N+j];
             cells[i][j]->show();
-            connect(cells[i][j],SIGNAL(clicked()),SLOT(cellClicked()));
         }
     }
 
@@ -162,6 +186,18 @@ void Sulte::cellClicked(){
     }
     nextVal = min;
     ui->nextLabel->setText("Next: " + n2s(nextVal));
+}
+
+void Sulte::showAvg(){
+    int avg = lastResults.getAvg(ui->spinBox->value());
+    qDebug() <<avg;
+    int sec = avg / 1000;
+    int dsec = avg % 1000 / 100;
+    ui->avgTime->setText( "Avg. time: " + n2s(sec) + "." + n2s(dsec) );
+}
+
+void Sulte::showAvg_(int a){
+    showAvg();
 }
 
 TableCell::TableCell(QWidget *parent):QPushButton(parent){
@@ -196,7 +232,6 @@ void TableCell::blink(){
 }
 
 void TableCell::animateColor(){
-    qDebug()<< currentColor->toHtmlRGBa();
     CSSColor* bc = baseColor;
     CSSColor* cc = currentColor;
     if (cc->r==bc->r&&cc->g==bc->g&&cc->b==bc->b&&cc->a==bc->a){
@@ -211,7 +246,6 @@ void TableCell::animateColor(){
         cc->b += (bc->b - cc->b)/abs(bc->b - cc->b);
     if (cc->a != bc->a)
         cc->a += (bc->a - cc->a)/abs(bc->a - cc->a);
-    qDebug() << currentColor;
     setColor();
 }
 
