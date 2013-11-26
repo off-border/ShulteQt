@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QTime>
 #include <QLCDNumber>
+#include <QSettings>
 #include "csswork.h"
 
 namespace Ui {
@@ -49,6 +50,7 @@ class Sulte : public QMainWindow
         int     totalMsec;
         char    displayTime[30];
         bool    success;
+        QSettings* settings;
 
         explicit Sulte(QWidget *parent = 0);
         ~Sulte();
@@ -60,6 +62,7 @@ class Sulte : public QMainWindow
         void stop();
         void cellClicked();
         void updateTime();
+        void exit();
 
     private:
         Ui::sulteForm *ui;

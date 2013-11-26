@@ -1,7 +1,6 @@
 #include "sulte.h"
 #include "ui_sulte.h"
 #include <math.h>
-#include <QPalette>
 #include <QDebug>
 
 QString n2s(int n){
@@ -16,17 +15,25 @@ Sulte::Sulte(QWidget *parent) :
     nextVal = 0;
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
-    connect(ui->exitButton,SIGNAL(clicked()),SLOT(close()));
+    connect(ui->exitButton,SIGNAL(clicked()),SLOT(exit()));
     connect(ui->startButton,SIGNAL(clicked()),SLOT(start()));
     timer = new QTimer();
 
     for (int i= 0; i<50; i++)
         for (int j= 0; j< 50; j++)
             cells[i][j] = new TableCell(ui->tableWidget);
+
+    settings = new QSettings("OutOfOrder inc.", "Shulte");
+    if ( settings->value("/tableSize").toInt() != 0 )
+        ui->spinBox->setValue(settings->value("/tableSize").toInt());
 }
 Sulte::~Sulte()
 {
     delete ui;
+}
+void Sulte:: exit(){
+    settings->setValue("tableSize",ui->spinBox->value());
+    close();
 }
 
 void Sulte::huyak(){
@@ -68,7 +75,7 @@ void Sulte::start(){
 
 void Sulte::stop(){
     timer->stop();
-    sprintf(displayTime,"%d.%d",totalMsec/1000,totalMsec%1000%100);
+    sprintf(displayTime,"%d.%d",totalMsec/1000,totalMsec%1000%100/10);
     ui->lcdNumber->display(displayTime);
     disconnect( ui->startButton, SIGNAL(clicked()), this, SLOT( stop()  ) );
     connect   ( ui->startButton, SIGNAL(clicked()), this, SLOT( start() ) );

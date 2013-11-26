@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'sulte.ui'
 **
-** Created: Mon 25. Nov 17:12:08 2013
+** Created: Tue 26. Nov 10:46:08 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -96,6 +96,7 @@ public:
         palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
         palette.setBrush(QPalette::Disabled, QPalette::Window, brush1);
         spinBox->setPalette(palette);
+        spinBox->setCursor(QCursor(Qt::SizeVerCursor));
         spinBox->setStyleSheet(QString::fromUtf8("background-color: #f5f5f5;\n"
 "border-width:1px;"));
         spinBox->setFrame(true);
@@ -127,6 +128,7 @@ public:
         startButton = new QPushButton(controls);
         startButton->setObjectName(QString::fromUtf8("startButton"));
         startButton->setGeometry(QRect(20, 136, 141, 51));
+        startButton->setCursor(QCursor(Qt::PointingHandCursor));
         startButton->setStyleSheet(QString::fromUtf8("background-color:#55dd55;\n"
 "color: white;\n"
 "border-width:1px;\n"
@@ -141,6 +143,7 @@ public:
         exitButton = new ExitLabel(ebaniyWidget);
         exitButton->setObjectName(QString::fromUtf8("exitButton"));
         exitButton->setGeometry(QRect(570, 10, 71, 41));
+        exitButton->setCursor(QCursor(Qt::PointingHandCursor));
         exitButton->setStyleSheet(QString::fromUtf8("border-color:gray;\n"
 "\n"
 ""));
@@ -160,9 +163,11 @@ public:
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:600;\">table size</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">rotate the wheel </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">or type</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent"
+                        ":0; text-indent:0px; font-size:8pt;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         spinBox->setSpecialValueText(QString());
         spinBox->setSuffix(QString());
