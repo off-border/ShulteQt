@@ -43,6 +43,9 @@ void Sulte::huyak(){
     ui->controls->move( frameW - (frameW-tableSize)/4 -  ui->controls->width()/2, (frameH - ui->controls->height())/2 );
     ui->exitButton->move(frameH*0.05, frameH*0.05);
 
+    ui->spinBox->setStyleSheet("QToolTip{border-radius:0px; font-weight: bold;}");
+
+
 }
 
 void Sulte::log(QString msg){
