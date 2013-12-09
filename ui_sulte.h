@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'sulte.ui'
 **
-** Created: Tue 26. Nov 18:19:39 2013
-**      by: Qt User Interface Compiler version 4.8.1
+** Created by: Qt User Interface Compiler version 4.8.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

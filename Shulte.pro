@@ -18,6 +18,10 @@ HEADERS  += sulte.h \
 
 FORMS    += sulte.ui
 
-OTHER_FILES +=
+OTHER_FILES += \
+    shulte_icon.rc
 
-RESOURCES +=
+RESOURCES += \
+    resouces.qrc
+
+win32:RC_FILE = "shulte_icon.rc"

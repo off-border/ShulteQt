@@ -15,6 +15,7 @@ Sulte::Sulte(QWidget *parent) :
     nextVal = 0;
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
+    setWindowIcon( QIcon(":/shulte_icon.png") );
     connect(ui->exitButton,SIGNAL(clicked()),SLOT(exit()));
     connect(ui->startButton,SIGNAL(clicked()),SLOT(start()));
     connect(ui->spinBox, SIGNAL( valueChanged(int) ), SLOT( showAvg_(int)) );

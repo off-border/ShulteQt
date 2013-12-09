@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>shulte_icon.png</file>
+        <file>shulte_icon.ico</file>
+    </qresource>
+</RCC>
