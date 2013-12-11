@@ -34,8 +34,8 @@ QWidget#ebaniyWidget{
    <widget class="QWidget" name="tableWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>40</y>
+      <x>40</x>
+      <y>30</y>
       <width>321</width>
       <height>231</height>
      </rect>
@@ -505,6 +505,22 @@ border-color:black;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="Grafik" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>280</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -513,6 +529,12 @@ border-color:black;</string>
    <class>ExitLabel</class>
    <extends>QLabel</extends>
    <header>sulte.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Grafik</class>
+   <extends>QFrame</extends>
+   <header>graphic.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

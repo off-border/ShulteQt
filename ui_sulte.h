@@ -22,6 +22,7 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QSpinBox>
 #include <QtGui/QWidget>
+#include "graphic.h"
 #include "sulte.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,6 +40,7 @@ public:
     QLabel *avgTime;
     QPlainTextEdit *plainTextEdit;
     ExitLabel *exitButton;
+    Grafik *frame;
 
     void setupUi(QMainWindow *sulteForm)
     {
@@ -59,7 +61,7 @@ public:
         ebaniyWidget->setMinimumSize(QSize(0, 0));
         tableWidget = new QWidget(ebaniyWidget);
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-        tableWidget->setGeometry(QRect(50, 40, 321, 231));
+        tableWidget->setGeometry(QRect(40, 30, 321, 231));
         tableWidget->setStyleSheet(QString::fromUtf8("QWidget#tableWidget{background-color:transparent;\n"
 "border-color:transparent; }\n"
 ""));
@@ -152,6 +154,11 @@ public:
 "\n"
 ""));
         exitButton->setAlignment(Qt::AlignCenter);
+        frame = new Grafik(ebaniyWidget);
+        frame->setObjectName(QString::fromUtf8("frame"));
+        frame->setGeometry(QRect(170, 280, 120, 80));
+        frame->setFrameShape(QFrame::StyledPanel);
+        frame->setFrameShadow(QFrame::Raised);
         sulteForm->setCentralWidget(ebaniyWidget);
 
         retranslateUi(sulteForm);

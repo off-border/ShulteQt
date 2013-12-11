@@ -11,10 +11,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        sulte.cpp
+        sulte.cpp \
+    graphic.cpp \
+    supercss.cpp
 
 HEADERS  += sulte.h \
-    csswork.h
+    csswork.h \
+    graphic.h \
+    supercss.h
 
 FORMS    += sulte.ui
 
