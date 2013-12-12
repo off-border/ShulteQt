@@ -4,8 +4,9 @@
 #include <QString>
 #include <stdio.h>
 
-#define CSS_MODE_DEFAULT    "default"
-#define CSS_MODE_INHERITED  "inherited"
+#define CSS_MODE_DEFAULT    0
+#define CSS_MODE_INHERITED  1
+#define CSS_MODE_CUSTOM     2
 #define CSS_VAL_PX          "px"
 #define CSS_VAL_PT          "pt"
 #define CSS_VAL_PERC        "%"
@@ -20,21 +21,28 @@ public:
     _RGB(int r, int g, int b);
     _RGB(int r, int g, int b, int a);
     _RGB(QString html_color);
+    void setVal (QString html_color);
+    void setVal (int _r, int _g, int _b);
+    void setVal (int _r, int _g, int _b, int _a);
+    bool fromString (QString html_color);
     QString toString();
 };
 
 class _BasicVal{
 private:
+    QString name;
     QString measure;
-    QString mode;
+    short   mode;
     int     valInt;
     QString valStr;
-    _RGB    valGRB;
+    _RGB    valRGB;
 public:
-    _BasicVal();
-    _BasicVal(QString mo_mea_val);
-
-    void set(QString str);
+    _BasicVal   ();
+    _BasicVal   (QString mo_mea_val);
+    void setVal (QString str);
+    void setVal (int val);
+    void setVal (int r, int g, int b);
+    void setVal (int r, int g, int b, int a);
 };
 
 class Color: _BasicVal{
