@@ -31,7 +31,7 @@ bool _RGB::fromString(QString html_color){
     }
     return false;
 }
-
+//в строку
 QString _RGB::toString(){
     return QString ( "rgba(" + QString::number(r) + "," + QString::number(g) + "," + QString::number(b) + "," + QString::number(a) );
 }
@@ -43,6 +43,9 @@ _BasicVal::_BasicVal(): measure("px"), mode(CSS_MODE_DEFAULT), valInt(0), valStr
 _BasicVal::_BasicVal(QString mo_mea_val){
         setVal(mo_mea_val);
 }
+_BasicVal::_BasicVal(int val)                    { measure = "px";  setVal(val);     }
+_BasicVal::_BasicVal(int r, int g, int b)        { measure = "rgb"; setVal(r,g,b);   }
+_BasicVal::_BasicVal(int r, int g, int b, int a) { measure = "rgb"; setVal(r,g,b,a); }
 //сеттеры
 void _BasicVal::setVal(QString str){
   //по умолчанию или унаследованный
@@ -58,11 +61,13 @@ void _BasicVal::setVal(QString str){
         }
     }
   //если размер
+    //в пикселях
     if ( str.indexOf("px") > 0 ){
         measure="px";
         valInt = str.toInt();
         return;
     }
+    //в процентах
     if ( str.indexOf("%") > 0 ){
         measure="%";
         valInt = str.toInt();
@@ -70,12 +75,12 @@ void _BasicVal::setVal(QString str){
     }
   //если незнамо что
     measure = "str";
-    valStr  = str;
+    valStr  =  str;
     return;
 }
-void _BasicVal::setval(int val){ valInt = val; }
-void _BasicVal::setVal(int r, int g, int b){ valRGB.setVal(r, g, b); }
-void _BasicVal::setVal(int r, int g, int b ,int a){ valRGB.setVal(r, g, b, a); }
+void _BasicVal::setVal(int val)                   { valInt = val;               mode = CSS_MODE_CUSTOM; return; }
+void _BasicVal::setVal(int r, int g, int b)       { valRGB.setVal(r, g, b);     mode = CSS_MODE_CUSTOM; return; }
+void _BasicVal::setVal(int r, int g, int b ,int a){ valRGB.setVal(r, g, b, a);  mode = CSS_MODE_CUSTOM; return; }
 
 
 /* SuperCSS realization */

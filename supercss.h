@@ -11,6 +11,7 @@
 #define CSS_VAL_PT          "pt"
 #define CSS_VAL_PERC        "%"
 
+/* класс для хранения значений в rgb(rgba) */
 class _RGB{
 public:
     int r;
@@ -28,6 +29,7 @@ public:
     QString toString();
 };
 
+/* Базовый класс для css-свойств */
 class _BasicVal{
 private:
     QString name;
@@ -39,11 +41,15 @@ private:
 public:
     _BasicVal   ();
     _BasicVal   (QString mo_mea_val);
+    _BasicVal   (int val);                     //Default measure is pixels in that case
+    _BasicVal   (int r, int g, int b);
+    _BasicVal   (int r, int g, int b, int a);
     void setVal (QString str);
     void setVal (int val);
     void setVal (int r, int g, int b);
     void setVal (int r, int g, int b, int a);
 };
+
 
 class Color: _BasicVal{
 
