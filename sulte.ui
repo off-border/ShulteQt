@@ -10,6 +10,9 @@
     <height>392</height>
    </rect>
   </property>
+  <property name="cursor">
+   <cursorShape>PointingHandCursor</cursorShape>
+  </property>
   <property name="windowTitle">
    <string>Sulte</string>
   </property>
@@ -451,20 +454,27 @@ border-color:black;</string>
       <string>Next: </string>
      </property>
     </widget>
-    <widget class="QLabel" name="avgTime">
+    <widget class="QPushButton" name="avgTime">
      <property name="geometry">
       <rect>
-       <x>23</x>
+       <x>20</x>
        <y>242</y>
-       <width>140</width>
+       <width>141</width>
        <height>31</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border:none; font-size: 20px;</string>
+      <string notr="true">#avgTime {
+border:none; 
+font-size: 20px;
+text-align:left;
+}
+#avgTime:hover{
+color:yellow;
+}</string>
      </property>
      <property name="text">
-      <string>Avg. time: </string>
+      <string>Avg. time:</string>
      </property>
     </widget>
    </widget>
@@ -505,7 +515,7 @@ border-color:black;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="Grafik" name="frame">
+   <widget class="Grafik" name="grafik">
     <property name="geometry">
      <rect>
       <x>170</x>

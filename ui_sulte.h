@@ -37,16 +37,17 @@ public:
     QLCDNumber *lcdNumber;
     QPushButton *startButton;
     QLabel *nextLabel;
-    QLabel *avgTime;
+    QPushButton *avgTime;
     QPlainTextEdit *plainTextEdit;
     ExitLabel *exitButton;
-    Grafik *frame;
+    Grafik *grafik;
 
     void setupUi(QMainWindow *sulteForm)
     {
         if (sulteForm->objectName().isEmpty())
             sulteForm->setObjectName(QString::fromUtf8("sulteForm"));
         sulteForm->resize(652, 392);
+        sulteForm->setCursor(QCursor(Qt::PointingHandCursor));
         sulteForm->setStyleSheet(QString::fromUtf8("*{\n"
 "	font-size:20px;\n"
 "	border: 2px solid black;\n"
@@ -138,10 +139,17 @@ public:
         nextLabel = new QLabel(controls);
         nextLabel->setObjectName(QString::fromUtf8("nextLabel"));
         nextLabel->setGeometry(QRect(20, 204, 141, 31));
-        avgTime = new QLabel(controls);
+        avgTime = new QPushButton(controls);
         avgTime->setObjectName(QString::fromUtf8("avgTime"));
-        avgTime->setGeometry(QRect(23, 242, 140, 31));
-        avgTime->setStyleSheet(QString::fromUtf8("border:none; font-size: 20px;"));
+        avgTime->setGeometry(QRect(20, 242, 141, 31));
+        avgTime->setStyleSheet(QString::fromUtf8("#avgTime {\n"
+"border:none; \n"
+"font-size: 20px;\n"
+"text-align:left;\n"
+"}\n"
+"#avgTime:hover{\n"
+"color:yellow;\n"
+"}"));
         plainTextEdit = new QPlainTextEdit(ebaniyWidget);
         plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
         plainTextEdit->setGeometry(QRect(50, 300, 321, 71));
@@ -154,11 +162,11 @@ public:
 "\n"
 ""));
         exitButton->setAlignment(Qt::AlignCenter);
-        frame = new Grafik(ebaniyWidget);
-        frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(170, 280, 120, 80));
-        frame->setFrameShape(QFrame::StyledPanel);
-        frame->setFrameShadow(QFrame::Raised);
+        grafik = new Grafik(ebaniyWidget);
+        grafik->setObjectName(QString::fromUtf8("grafik"));
+        grafik->setGeometry(QRect(170, 280, 120, 80));
+        grafik->setFrameShape(QFrame::StyledPanel);
+        grafik->setFrameShadow(QFrame::Raised);
         sulteForm->setCentralWidget(ebaniyWidget);
 
         retranslateUi(sulteForm);
@@ -184,7 +192,7 @@ public:
         spinBox->setSuffix(QString());
         startButton->setText(QApplication::translate("sulteForm", "Start", 0, QApplication::UnicodeUTF8));
         nextLabel->setText(QApplication::translate("sulteForm", "Next: ", 0, QApplication::UnicodeUTF8));
-        avgTime->setText(QApplication::translate("sulteForm", "Avg. time: ", 0, QApplication::UnicodeUTF8));
+        avgTime->setText(QApplication::translate("sulteForm", "Avg. time:", 0, QApplication::UnicodeUTF8));
         exitButton->setText(QApplication::translate("sulteForm", "Exit", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

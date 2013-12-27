@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QFrame>
 #include <QPainter>
+#include <QPushButton>
 #include "supercss.h"
 
 class Grafik: public QFrame{
@@ -11,10 +12,14 @@ class Grafik: public QFrame{
 public:
     QPainter *painter;
     SuperCSS *css;
+    QPushButton *closeBtn;
 
     explicit Grafik();
     explicit Grafik(QWidget *parent=0);
     ~Grafik();
+public slots:
+    void openClose();
+
 };
 
 

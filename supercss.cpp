@@ -85,26 +85,57 @@
     void _BasicVal::setMeasure(QString str)           { measure = str; }
     void _BasicVal::setNameMeas(QString name, QString meas){ setName(name); setMeasure(meas); }
 //в строку
-    QString _BasicVal::toString(){
-        if ( measure == "px" ) return name + ": " + QString::number( valInt ) + measure;
-        if ( measure == "%"  ) return name + ": " + QString::number( valInt ) + measure;
-        if ( measure == "rgb") return name + ": " + valRGB.toString();
+    QString _BasicVal::_toString(QString prefix){
+        if ( measure == "px" ) return prefix + QString::number( valInt ) + measure;
+        if ( measure == "%"  ) return prefix + QString::number( valInt ) + measure;
+        if ( measure == "rgb") return prefix + valRGB.toString();
       //Если мера неизвестна или string
-        return name + ": " + valStr;
+        return prefix + valStr;
     }
+    QString _BasicVal::toString(){
+        return _toString(name + ": ");
+    }
+
+/* _SSComplexVal realization */
+//конструкторы
+    _SSComplexVal::_SSComplexVal():mode( CSS_MODE_DEFAULT ){}
+//сеттеры
+   void _SSComplexVal::setName(QString _name) { name = _name; }
+   void _SSComplexVal::setMode(short _mode)   { mode = _mode; }
 
 /* SSColor realization */
 //конструкторы
     SSColor::SSColor():_BasicVal(){ setName("color"); setMeasure("rgb"); }
 
-/* SSBorderSingle realization */
-    _SSBorderSingle::_SSBorderSingle(){
+/* SSBorderSide realization */
+//конструкторы
+    _SSBorderSide::_SSBorderSide(){
         color.setNameMeas("color","rgb");
         width.setNameMeas("width","px");
         style.setNameMeas("style","str");
     }
+//в строку
+    QString _SSBorderSide::toString(){
+        return name + ": " + color._toString("") + " " + width._toString("") + " " + style._toString("");
+    }
 
-
+/* SSBorder realization */
+//конструкторы
+    SSBorder::SSBorder(){
+        setName("border");
+        setMode(CSS_MODE_DEFAULT);
+    }
+//в строку
+    QString SSBorder::toString(){
+        if ( mode == CSS_MODE_DEFAULT || mode == CSS_MODE_INHERITED )
+            return "";
+        QString borders;
+        borders += name + "-" + top.toString()    + ";";
+        borders += name + "-" + left.toString()   + ";";
+        borders += name + "-" + bottom.toString() + ";";
+        borders += name + "-" + right.toString()  + ";";
+        return borders;
+    }
 
 /* SuperCSS realization */
 SuperCSS::SuperCSS()

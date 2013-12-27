@@ -19,6 +19,7 @@ Sulte::Sulte(QWidget *parent) :
     connect(ui->exitButton,SIGNAL(clicked()),SLOT(exit()));
     connect(ui->startButton,SIGNAL(clicked()),SLOT(start()));
     connect(ui->spinBox, SIGNAL( valueChanged(int) ), SLOT( showAvg_(int)) );
+    connect(ui->avgTime, SIGNAL(clicked()), ui->grafik, SLOT(openClose()));
     timer = new QTimer();
 
     for (int i= 0; i<50; i++)

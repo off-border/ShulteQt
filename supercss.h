@@ -29,7 +29,7 @@ public:
     QString toString();
 };
 
-/* Базовый класс для css-свойств */
+/* Базовый класс для простых css-свойств */
 class _BasicVal{
 protected:
     QString name;
@@ -52,8 +52,19 @@ public:
     void setMeasure(QString str);
     void setNameMeas(QString name, QString meas);
     QString toString();
+    QString _toString(QString prefix);
 };
 
+/* Базовый класс для комплексных свойств */
+class _SSComplexVal{
+protected:
+    QString name;
+    short   mode;
+public:
+    _SSComplexVal();
+    void setMode(short   _mode);
+    void setName(QString _name);
+};
 
 /* Цвет текста */
 class SSColor: public _BasicVal{
@@ -62,19 +73,44 @@ public:
 };
 
 /* Границы */
-class _SSBorderSingle{
+/* любая сторона */
+class _SSBorderSide: public _SSComplexVal{
 public:
-     QString  name;
     _BasicVal width;
     _BasicVal color;
     _BasicVal style;
-    _SSBorderSingle();
+    _SSBorderSide();
+    QString toString();
+};
+/* все стороны */
+class SSBorder: _SSComplexVal{
+public:
+    _SSBorderSide top;
+    _SSBorderSide left;
+    _SSBorderSide bottom;
+    _SSBorderSide right;
+    SSBorder();
+    QString toString();
+};
+
+/* бэкграунд */
+/* имейдж */
+class _SSBGImage: _SSComplexVal{
+public:
+    QString name;
+    QString url;
+    _SSBGImage();
+};
+
+class SSBackground{
+
 };
 
 class SuperCSS
 {
 public:
     SSColor color;
+    SSBorder border;
 
     SuperCSS();
 };
