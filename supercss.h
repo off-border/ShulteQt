@@ -29,9 +29,23 @@ public:
     QString toString();
 };
 
+/* Базовый класс для комплексных свойств */
+class _SSComplexVal{
+protected:
+    _SSComplexVal *parent;
+    QString name;
+    short   mode;
+public:
+    _SSComplexVal();
+    void setParent(_SSComplexVal *_parent);
+    void setMode(short   _mode);
+    void setName(QString _name);
+};
+
 /* Базовый класс для простых css-свойств */
 class _BasicVal{
 protected:
+    _SSComplexVal *parent;
     QString name;
     QString measure;
     short   mode;
@@ -44,26 +58,17 @@ public:
     _BasicVal   (int val);                     //Default measure is pixels in that case
     _BasicVal   (int r, int g, int b);
     _BasicVal   (int r, int g, int b, int a);
+    void setParent(_SSComplexVal *_parent);
+    void setMode  (short _mode);
     void setVal (QString str);
     void setVal (int val);
     void setVal (int r, int g, int b);
     void setVal (int r, int g, int b, int a);
     void setName(QString str);
     void setMeasure(QString str);
-    void setNameMeas(QString name, QString meas);
+    void setNameMeasParent(QString name, QString meas, _SSComplexVal *parent);
     QString toString();
     QString _toString(QString prefix);
-};
-
-/* Базовый класс для комплексных свойств */
-class _SSComplexVal{
-protected:
-    QString name;
-    short   mode;
-public:
-    _SSComplexVal();
-    void setMode(short   _mode);
-    void setName(QString _name);
 };
 
 /* Цвет текста */
