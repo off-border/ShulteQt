@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "supercss.h"
 
 
@@ -33,7 +34,7 @@
 }
   //в строку
     QString _RGB::toString(){
-    return QString ( "rgba(" + QString::number(r) + "," + QString::number(g) + "," + QString::number(b) + "," + QString::number(a) );
+        return QString ( "rgba(" + QString::number(r) + "," + QString::number(g) + "," + QString::number(b) + "," + QString::number(a) + ")" );
 }
 
 
@@ -94,10 +95,10 @@
             return "";
         QString resStr;
         if ( measure == "px" ) resStr = prefix + QString::number( valInt ) + measure;
-        if ( measure == "%"  ) resStr = prefix + QString::number( valInt ) + measure;
-        if ( measure == "rgb") resStr = prefix + valRGB.toString();
+        else if ( measure == "%"  ) resStr = prefix + QString::number( valInt ) + measure;
+        else if ( measure == "rgb") resStr = prefix + valRGB.toString();
       //Если мера неизвестна или string
-        resStr = prefix + valStr;
+        else resStr = prefix + valStr;
       //Если не входит в сложное свойство, добавляем ';'
         if ( parent == NULL )
             resStr += ';';
@@ -152,18 +153,38 @@
         if ( mode == CSS_MODE_DEFAULT || mode == CSS_MODE_INHERITED )
             return "";
         QString borders;
-        borders += name + "-" + top.toString()    + ";";
-        borders += name + "-" + left.toString()   + ";";
-        borders += name + "-" + bottom.toString() + ";";
-        borders += name + "-" + right.toString()  + ";";
+        borders += name + "-" + top.toString()    + "; ";
+        borders += name + "-" + left.toString()   + "; ";
+        borders += name + "-" + bottom.toString() + "; ";
+        borders += name + "-" + right.toString()  + "; ";
         return borders;
     }
 
-
-
+/* SSBackground realization */
+  //конструкторы
+    SSBackground::SSBackground():_SSComplexVal(){
+        setName( "background" );
+        color.setNameMeasParent("color", "rgb", this);
+    }
+  //в строку
+    QString SSBackground::toString(){
+        if ( mode == CSS_MODE_DEFAULT || mode == CSS_MODE_INHERITED )
+            return "";
+        QString resStr;
+        resStr += name + "-" + color.toString() + "; ";
+        return resStr;
+    }
 
 /* SuperCSS realization */
-SuperCSS::SuperCSS()
-{
-
-}
+  //конструкторы
+    SuperCSS::SuperCSS(){
+    }
+  //в строку
+    QString SuperCSS::toString(){
+        QString resStr;
+        this;
+        resStr += color.toString();
+        resStr += border.toString();
+        resStr += background.toString();
+        return resStr;
+    }

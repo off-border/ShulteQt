@@ -102,22 +102,25 @@ public:
 /* имейдж */
 class _SSBGImage: _SSComplexVal{
 public:
-    QString name;
     QString url;
     _SSBGImage();
 };
 
-class SSBackground{
-
+class SSBackground: public _SSComplexVal{
+public:
+    _BasicVal color;
+    SSBackground();
+    QString toString();
 };
 
 class SuperCSS
 {
 public:
-    SSColor color;
-    SSBorder border;
-
+    SSColor         color;
+    SSBorder        border;
+    SSBackground    background;
     SuperCSS();
+    QString toString();
 };
 
 #endif // SUPERCSS_H
