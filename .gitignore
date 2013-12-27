@@ -1,9 +1,0 @@
-*.o
-*.exe
-*.user
-*.Debug
-*.Release
-release/moc_sulte.cpp
-Shulte.pro.user.607c7c3.2.5pre1
-Shulte.pro.user.861afa9
-debug/moc_sulte.cpp

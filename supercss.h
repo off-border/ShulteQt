@@ -31,7 +31,7 @@ public:
 
 /* Базовый класс для css-свойств */
 class _BasicVal{
-private:
+protected:
     QString name;
     QString measure;
     short   mode;
@@ -48,17 +48,33 @@ public:
     void setVal (int val);
     void setVal (int r, int g, int b);
     void setVal (int r, int g, int b, int a);
+    void setName(QString str);
+    void setMeasure(QString str);
+    void setNameMeas(QString name, QString meas);
+    QString toString();
 };
 
 
-class Color: _BasicVal{
+/* Цвет текста */
+class SSColor: public _BasicVal{
+public:
+    SSColor();
+};
 
+/* Границы */
+class _SSBorderSingle{
+public:
+     QString  name;
+    _BasicVal width;
+    _BasicVal color;
+    _BasicVal style;
+    _SSBorderSingle();
 };
 
 class SuperCSS
 {
 public:
-    Color color;
+    SSColor color;
 
     SuperCSS();
 };

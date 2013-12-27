@@ -3,15 +3,15 @@
 
 /* _RGB realization */
 //конструкторы
-_RGB::_RGB(): r(0),g(0),b(0),a(255){}
-_RGB::_RGB(int r, int g, int b): r(r),g(g),b(b),a(0){}
-_RGB::_RGB(int r, int g, int b, int a): r(r),g(g),b(b),a(a){}
-_RGB::_RGB(QString html_color){ fromString( html_color ); }
+    _RGB::_RGB(): r(0),g(0),b(0),a(255){}
+    _RGB::_RGB(int r, int g, int b): r(r),g(g),b(b),a(0){}
+    _RGB::_RGB(int r, int g, int b, int a): r(r),g(g),b(b),a(a){}
+    _RGB::_RGB(QString html_color){ fromString( html_color ); }
 //сеттеры
-void _RGB::setVal (QString html_color){ fromString(html_color); }
-void _RGB::setVal (int _r, int _g, int _b){ r=_r; g=_g; b=_b; a=255; }
-void _RGB::setVal (int _r, int _g, int _b, int _a){ r=_r; g=_g; b=_b; a=_a; }
-bool _RGB::fromString(QString html_color){
+    void _RGB::setVal (QString html_color){ fromString(html_color); }
+    void _RGB::setVal (int _r, int _g, int _b){ r=_r; g=_g; b=_b; a=255; }
+    void _RGB::setVal (int _r, int _g, int _b, int _a){ r=_r; g=_g; b=_b; a=_a; }
+    bool _RGB::fromString(QString html_color){
     if ( html_color.indexOf("#") == 0 ){
         if (QString(html_color).length() == 7)
             sscanf( html_color.toAscii(), "#%2x%2x%2x", &r, &g, &b );
@@ -32,58 +32,82 @@ bool _RGB::fromString(QString html_color){
     return false;
 }
 //в строку
-QString _RGB::toString(){
+    QString _RGB::toString(){
     return QString ( "rgba(" + QString::number(r) + "," + QString::number(g) + "," + QString::number(b) + "," + QString::number(a) );
 }
 
 
 /* _BasicVal realization */
 //конструкторы
-_BasicVal::_BasicVal(): measure("px"), mode(CSS_MODE_DEFAULT), valInt(0), valStr(""), valRGB(_RGB()){}
-_BasicVal::_BasicVal(QString mo_mea_val){
-        setVal(mo_mea_val);
-}
-_BasicVal::_BasicVal(int val)                    { measure = "px";  setVal(val);     }
-_BasicVal::_BasicVal(int r, int g, int b)        { measure = "rgb"; setVal(r,g,b);   }
-_BasicVal::_BasicVal(int r, int g, int b, int a) { measure = "rgb"; setVal(r,g,b,a); }
+    _BasicVal::_BasicVal(): measure("px"), mode(CSS_MODE_DEFAULT), valInt(0), valStr(""), valRGB(_RGB()){}
+    _BasicVal::_BasicVal(QString mo_mea_val){
+            setVal(mo_mea_val);
+    }
+    _BasicVal::_BasicVal(int val)                    { measure = "px";  setVal(val);     }
+    _BasicVal::_BasicVal(int r, int g, int b)        { measure = "rgb"; setVal(r,g,b);   }
+    _BasicVal::_BasicVal(int r, int g, int b, int a) { measure = "rgb"; setVal(r,g,b,a); }
 //сеттеры
-void _BasicVal::setVal(QString str){
-  //по умолчанию или унаследованный
-    if ( str == "default" )   { mode = CSS_MODE_DEFAULT;   return; }
-    if ( str == "inherited" ) { mode = CSS_MODE_INHERITED; return; }
-    mode = CSS_MODE_CUSTOM;
-  //если цвет
-    if ( str.indexOf("#") >= 0 )   { valRGB.fromString( str ); measure="rgb"; return; }
-    if ( str.indexOf("rgb") >= 0 ) {
-        if( valRGB.fromString(str) ) {
-            measure="rgb";
+    void _BasicVal::setVal(QString str){
+      //по умолчанию или унаследованный
+        if ( str == "default" )   { mode = CSS_MODE_DEFAULT;   return; }
+        if ( str == "inherited" ) { mode = CSS_MODE_INHERITED; return; }
+        mode = CSS_MODE_CUSTOM;
+      //если цвет
+        if ( str.indexOf("#") >= 0 )   { valRGB.fromString( str ); measure="rgb"; return; }
+        if ( str.indexOf("rgb") >= 0 ) {
+            if( valRGB.fromString(str) ) {
+                measure="rgb";
+                return;
+            }
+        }
+      //если размер
+        //в пикселях
+        if ( str.indexOf("px") > 0 ){
+            measure="px";
+            valInt = str.toInt();
             return;
         }
-    }
-  //если размер
-    //в пикселях
-    if ( str.indexOf("px") > 0 ){
-        measure="px";
-        valInt = str.toInt();
+        //в процентах
+        if ( str.indexOf("%") > 0 ){
+            measure="%";
+            valInt = str.toInt();
+            return;
+        }
+      //если незнамо что
+        measure = "str";
+        valStr  =  str;
         return;
     }
-    //в процентах
-    if ( str.indexOf("%") > 0 ){
-        measure="%";
-        valInt = str.toInt();
-        return;
+    void _BasicVal::setVal(int val)                   { valInt = val;               mode = CSS_MODE_CUSTOM; return; }
+    void _BasicVal::setVal(int r, int g, int b)       { valRGB.setVal(r, g, b);     mode = CSS_MODE_CUSTOM; return; }
+    void _BasicVal::setVal(int r, int g, int b ,int a){ valRGB.setVal(r, g, b, a);  mode = CSS_MODE_CUSTOM; return; }
+    void _BasicVal::setName(QString str)              { name = str; }
+    void _BasicVal::setMeasure(QString str)           { measure = str; }
+    void _BasicVal::setNameMeas(QString name, QString meas){ setName(name); setMeasure(meas); }
+//в строку
+    QString _BasicVal::toString(){
+        if ( measure == "px" ) return name + ": " + QString::number( valInt ) + measure;
+        if ( measure == "%"  ) return name + ": " + QString::number( valInt ) + measure;
+        if ( measure == "rgb") return name + ": " + valRGB.toString();
+      //Если мера неизвестна или string
+        return name + ": " + valStr;
     }
-  //если незнамо что
-    measure = "str";
-    valStr  =  str;
-    return;
-}
-void _BasicVal::setVal(int val)                   { valInt = val;               mode = CSS_MODE_CUSTOM; return; }
-void _BasicVal::setVal(int r, int g, int b)       { valRGB.setVal(r, g, b);     mode = CSS_MODE_CUSTOM; return; }
-void _BasicVal::setVal(int r, int g, int b ,int a){ valRGB.setVal(r, g, b, a);  mode = CSS_MODE_CUSTOM; return; }
+
+/* SSColor realization */
+//конструкторы
+    SSColor::SSColor():_BasicVal(){ setName("color"); setMeasure("rgb"); }
+
+/* SSBorderSingle realization */
+    _SSBorderSingle::_SSBorderSingle(){
+        color.setNameMeas("color","rgb");
+        width.setNameMeas("width","px");
+        style.setNameMeas("style","str");
+    }
+
 
 
 /* SuperCSS realization */
 SuperCSS::SuperCSS()
 {
+
 }
