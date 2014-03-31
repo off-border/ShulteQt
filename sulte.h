@@ -121,7 +121,7 @@ class Sulte : public QMainWindow
         void showAvg();
         void showAvg_(int);
 
-    private:
+private:
         Ui::sulteForm *ui;
     };
 

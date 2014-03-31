@@ -9,6 +9,8 @@
 
 class Grafik: public QFrame{
    Q_OBJECT
+protected:
+    void mouseReleaseEvent(QMouseEvent *event);
 public:
     QPainter *painter;
     SuperCSS *css;

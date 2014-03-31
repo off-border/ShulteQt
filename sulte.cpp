@@ -45,6 +45,8 @@ Sulte::Sulte(QWidget *parent) :
     startBtStyle->fontSize->value = 20;
     ui->startButton->setStyleSheet( startBtStyle->toString() );
 
+    ui->grafik->hide();
+
 }
 Sulte::~Sulte()
 {
@@ -254,4 +256,3 @@ void TableCell::setColor(){
     css->backgroundColor->value.fromCssColor(currentColor);
     setStyleSheet(css->toString());
 }
-
