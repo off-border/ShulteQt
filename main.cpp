@@ -7,8 +7,8 @@ int main(int argc, char *argv[])
     Sulte w;
     //w.show();
     w.showMaximized();
-    w.huyak();
-    w.loadCells();
+    //w.huyak(); //m
+    //w.loadCells();
 
 
     return app.exec();

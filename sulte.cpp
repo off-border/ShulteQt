@@ -58,11 +58,20 @@ void Sulte:: exit(){
     close();
 }
 
+void Sulte::resizeEvent(QResizeEvent *){
+    huyak();
+    if( !timer->isActive() )
+        loadCells();
+}
+
+
 void Sulte::huyak(){
     ui->plainTextEdit->hide();
 
     int frameW = ui->ebaniyWidget->width();
     int frameH = ui->ebaniyWidget->height();
+
+
     ui->plainTextEdit->appendPlainText("Width: " + QString().setNum(frameW) + " \n Height: " + QString().setNum(frameH));
 
     int tableSize = frameH - frameH*0.1;
@@ -74,7 +83,6 @@ void Sulte::huyak(){
 
     ui->spinBox->setStyleSheet("QToolTip{border-radius:0px; font-weight: bold;}");
 
-
 }
 
 void Sulte::log(QString msg){
@@ -82,6 +90,7 @@ void Sulte::log(QString msg){
 }
 
 void Sulte::start(){
+
     loadCells();
     nextVal = 1;
     success = false;

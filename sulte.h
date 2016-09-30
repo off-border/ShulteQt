@@ -8,7 +8,7 @@
 #include <QTime>
 #include <QLCDNumber>
 #include <QSettings>
-#include <Qlist>
+#include <QList>
 #include <QDebug>
 #include "csswork.h"
 
@@ -120,6 +120,8 @@ class Sulte : public QMainWindow
         void exit();
         void showAvg();
         void showAvg_(int);
+
+        void resizeEvent(QResizeEvent*);
 
 private:
         Ui::sulteForm *ui;
